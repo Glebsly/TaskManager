@@ -1,33 +1,48 @@
-#all-tasks{
-  .header{
+#all-tasks {
+  height: 100%;
+  overflow: auto;
+
+  .header {
+    position: relative;
     color: $white;
     text-decoration-color: $white;
     display: flex;
     align-items: center;
     justify-content: center;
-    background:
-    url('https://images.pexels.com/photos/552785/pexels-photo-552785.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+    background-image: url("https://images.pexels.com/photos/552785/pexels-photo-552785.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+    background-color: rgba(58, 71,147,.8);
     background-position: center;
+    background-blend-mode: overlay;
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
-    .top{
-      background-color: rgba(58, 71,147,.6);
+
+    .top {
+      max-width: 1200px;
+      // background-color: rgba(58, 71,147,.6);
       width: 100%;
       padding: 50px 15px;
-      text-align: right;
-      #logo{
-        float: left;
+      // text-align: right;
+      display: flex;
+      justify-content: space-between;
+
+      #logo {
+        // min-width: 230.7px;
         text-transform: capitalize;
         font-family: 'Pacifico', cursive;
         font-size: 36px;
+        float: left;
       }
-      .task-total{
+
+      .task-total {
+        // min-width: 267.39px;
         position: relative;
         top: -5px;
-        .task{
+
+        .task {
           display: inline-block;
-          .tasks-count{
+
+          .tasks-count {
             color: $lightPurple;
             font-weight: 200;
             font-size: 36px;
@@ -37,32 +52,300 @@
           }
         }
       }
-      .circle{
-        background-color: white;
+
+      .circle {
+        background-color: $lightBlue;
         border-radius: 50%;
         position: absolute;
         padding: 10px 13px;
         right: 25px;
         top: 100px;
-        .fa{
-          color: $lightBlue;
-          font-size: 50px;
-    }
+        z-index: 10;
 
+        .fa {
+          color: $white;
+          font-size: 50px;
+        }
+      }
+    }
+    @media screen and (max-width: 649px) {
+      #logo {
+        clear: both;
+        width: 100%;
+        display: block;
       }
 
+      .top {
+        display: block;
+      }
+
+      .task-total {
+        display: block;
+      }
+
+      .task {
+        margin-top: 15px;
+      }
+
+      .circle {
+        top: 140px !important;
+      }
     }
   }
-  .content-area{
-   color: $lightBlue;
+
+  .content-area {
+    color: black;
+
+    .tasks-container {
+      margin: 40px 0;
+
+      .task-box {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 2px solid #d1d1d1;
+        background-color: #fff;
+        margin: 20px 0;
+
+        .task-info {
+          max-width: 88%;
+        }
+
+        .title {
+          text-transform: capitalize;
+          font-size: 32px;
+        }
+
+        .date {
+          color: #ababab;
+        }
+        // input styling
+        /* Customize the label (the container) */
+        .checkbox-container {
+          height: 48px;
+          width: 48px;
+          //display: block;
+          position: relative;
+          // padding-left: 35px;
+          // margin-bottom: 12px;
+          cursor: pointer;
+          font-size: 22px;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        /* Hide the browser's default checkbox */
+        .checkbox-container input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+        /* Create a custom checkbox */
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 48px;
+          width: 48px;
+          border: 1px $lightBlue dashed;
+          transition: all 0.5s ease-in-out;
+        }
+        /* On mouse-over, add a grey background color */
+        .checkbox-container:hover input ~ .checkmark {
+          background-color: #ccc;
+        }
+        /* When the checkbox is checked, add a blue background */
+        .checkbox-container input:checked ~ .checkmark {
+          background-color: $lightBlue;
+          transition: all 0.5s ease-in-out;
+          border-radius: 50%;
+          height: 48px;
+          width: 48px;
+        }
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+        }
+        /* Show the checkmark when checked */
+        .checkbox-container input:checked ~ .checkmark:after {
+          display: block;
+        }
+        /* Style the checkmark/indicator */
+        .checkbox-container .checkmark:after {
+          left: 17px;
+          top: 10px;
+          width: 10px;
+          height: 18px;
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+      }
+    }
   }
 }
 
+.task-form {
+  background-color: $darkBlue;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  color: $white;
+  padding: 10% 0;
+  margin: 0 auto;
+  text-align: center;
+  transform: translate(0, 100%);
+  transition: all 0.6s ease-in-out;
+  overflow: auto;
 
-.container{
+  &.active {
+    transform: translate(0, 0);
+  }
+
+  .close-btn {
+    .fa {
+      font-size: 36px;
+    }
+    position: absolute;
+    right: 35px;
+    top: 35px;
+    padding: 15px;
+    // background-color: $lightBlue;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: inline-block;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  h3 {
+    font-size: 36px;
+    margin: 50px 0;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  label {
+    text-align: left;
+    display: block;
+    text-transform: capitalize;
+    font-weight: 300;
+    margin: 0 0 15px;
+    font-size: 24px;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    margin: 0 0 15px;
+    font-size: 36px;
+    color: $white;
+
+    &:focus {
+      border: none;
+      outline: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .submit-new-task {
+    background-color: $lightBlue;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: $white;
+    padding: 15px 20px;
+  }
+}
+
+.container {
   width: 100%;
   display: block;
   max-width: 1200px;
   margin: 0 auto;
-
+  padding: 0 15px;
 }
+
+body {
+  background-color: #cccccc;
+}
+// @media only screen and (max-device-width: 544px) {
+//   .top:first-child:after {
+//     content: '';
+//     width: 100%;
+//   }
+//
+//   .top {
+//     position: relative;
+//     // background-color: rgba(58, 71,147,.6);
+//     width: 100%;
+//     padding: 50px 15px;
+//     text-align: left;
+//     display: flex;
+//     justify-content: space-between;
+//
+//     #logo {
+//       min-width: 230.7px;
+//       text-transform: capitalize;
+//       font-family: 'Pacifico', cursive;
+//       font-size: 36px;
+//       display: block;
+//     }
+//
+//     .task-total {
+//       min-width: 267.39px;
+//       position: relative;
+//       top: -5px;
+//       display: block;
+//
+//       .task {
+//         display: inline-block;
+//
+//         .tasks-count {
+//           color: $lightPurple;
+//           font-weight: 200;
+//           font-size: 36px;
+//           margin: 0 10px 0 0;
+//           position: relative;
+//           top: 5px;
+//         }
+//       }
+//     }
+//
+//     .circle {
+//       background-color: $lightBlue;
+//       border-radius: 50%;
+//       position: absolute;
+//       padding: 10px 13px;
+//       right: 25px;
+//       top: 100px;
+//       z-index: 10;
+//
+//       .fa {
+//         color: $white;
+//         font-size: 50px;
+//       }
+//     }
+//   }
+// }
